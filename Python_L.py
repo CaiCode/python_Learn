@@ -108,3 +108,96 @@ L = ['adam', 'LISA', 'barT']
 print(list(map(normalize,L)))
 '''
 
+
+'''
+#筛选器设计
+#1.构建所需要的序列
+def _odd_iter():
+	n = 1
+	while True:
+		n += 2
+		yield n
+		pass
+#2.构建筛选器
+def _not_divisible(n):
+	return lambda x: x%n>0
+
+#3.获得生成器
+
+def primes():
+	yield 2
+	it = _odd_iter()
+	while True:
+		n = next(it)
+		yield n
+		it = filter(_not_divisible(n),it)
+		pass
+
+for n in primes():
+	if n<1000:
+		print(n)
+	else:
+		break
+'''
+
+'''
+def is_palindrome(n):
+	str_n = str(n)
+	if str_n[:] == str_n[-1::-1]:
+		return True
+	else:
+		return False
+
+output = filter(is_palindrome,range(1,1000))
+print(list(output))
+'''
+
+'''
+def by_name(t):
+	for s in t:
+		if isinstance(s,str):
+			return s
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+L2 = sorted(L,key=by_name)
+print(L2)
+'''
+'''
+import functools
+
+def  log(text = None):
+	def decorator(func):
+		@functools.wraps(func)
+		def  wrapper(*args, **kw):
+			print('%s %s():'%(text,func.__name__))
+			return func(*args, **kw)
+		return wrapper
+	return decorator
+
+@log()
+def now():
+	print('2015-3-15')
+
+now()
+'''
+
+'''
+import functools
+def log(func):
+	@functools.wraps(func)
+	def wrapper(*args,**kw):
+		print('begin %s'%func.__name__)
+		func(*args,**kw)
+		print('end %s'%func.__name__)
+		return
+	return wrapper
+
+@log
+
+def now():
+	print('2015-3-15')
+'''
+
+
+
+now()
+
