@@ -197,7 +197,264 @@ def now():
 	print('2015-3-15')
 '''
 
+'''
+import functools
+int2 = functools.partial(int ,base=2)
+'''
+
+#模块
+'''
+from PIL import Image
+im = Image.open('test.png')
+print(im.format, im.size, im.mode)
+im.thumbnail((200,100))
+im.save('thumb.png','PNG')
+'''
+
+'''
+class Student(object):
+	def __init__(self, name ,score):
+		self.name = name
+		self.score = score
+		pass
+
+	def  print_score(self):
+		print('%s:%s'%(self.name, self.score))
+		pass
+
+	def  Get_Grad_rank(self):
+		if self.score >= 90:
+			return 'A'
+		elif self.score >= 60:
+			return 'B'
+		else:
+			return 'C'
+
+bart = Student('Bart Simpson',59)
+bart.print_score()
+'''
+
+'''
+class Animal(Object):
+	def run(self):
+		print('Animal is running')
+		pass
+
+class Dog(Animal):
+	def  run(self):
+		print('Dog is running')
+		pass
+
+class Cat(Animal):
+	def run():
+		print('Cat is running')
+		pass
+'''
+
+'''
+class MyObject(object):
+	def __init__(self):
+		self.x = 9
+	def power(self):
+		return self.x*self.x
+
+obj = MyObject()
+hasattr(obj,'x')
+setattr(obj,'y',19)
+getattr(obj,'y')
+'''
 
 
-now()
+'''
+def readImage(fp):
+	if hasattr(fp,'read'):
+		return readData(fp)
+	return None
+'''
+
+
+'''
+#实例属性和类属性
+class Student(object):
+	def __init__(self,name):
+		self.name = name
+
+#此处的name为实例属性
+
+class Student(object):
+	name = 'Student'
+
+#此处为类属性
+'''
+
+'''
+class Student(object):
+	pass
+
+#绑定属性
+s = Student()
+s.name = 'Michael'
+
+#绑定方法(实例)
+def set_age(self,age):
+	self.age = age
+from types import MethodType
+s.set_age = MethodType(set_age,s)
+
+#绑定方法(class)
+def set_score(self,score):
+	self.score
+
+Student set_score = set_score
+#限制实例添加的属性数量
+
+class Student(object):
+	__slots__ = ('name','age')
+'''
+
+
+'''
+class Screen(object):
+	@property
+	def width(self):
+		return self._width
+
+	@width.setter
+	def width(self,value):
+		if not isinstance(value,int):
+			raise ValueError("must be integer")
+		if value < 0:
+			raise ValueError("must > 0")
+		self._width = value
+
+	@property
+	def height(self):
+		return self._width
+
+	@height.setter
+	def height(self,value):
+		if not isinstance(value,int):
+			raise ValueError("must be integer")
+		if value < 0:
+			raise ValueError("must > 0")
+		self._height = value
+
+	@property
+	def  resolution(self):
+		return self._height*self._width
+		pass
+
+
+s = Screen()
+s.width = 1024
+s.height = 768
+print(s.resolution)
+assert s.resolution == 786432, '1024 * 768 = %d ?' % s.resolution
+'''
+
+'''
+#多重继承
+
+class Animal(object):
+	pass
+
+#大类
+class Mammal(Animal):
+	pass
+
+class Bird(Animal):
+	pass
+
+#各种动物
+class Dog(Mammal):
+	pass
+
+class Bat(Mammal):
+	pass
+
+class Parrot(Bird):
+	pass
+
+class Ostrich(Bird):
+	pass
+
+class Runnable(object):
+	def  run(self):
+		print("running...")
+		pass
+
+class Flyable(object):
+	def fly(self):
+		print("Flying...")
+
+class Dog(Mammal,Runnable):
+	pass
+
+class Bat(Mammal,Flyable):
+	pass
+'''
+
+'''
+class Student(object):
+	def  __init__(self,name):
+		self.name = name
+		pass
+#负责打印的字符串
+	def __str__(self):
+		return 'Student object (name: %s)' %self.name
+
+#直接显示变量调用的不是__str__()而是__repr__()返回的是程序开发者看到的字符串
+s = Student('Michael')
+print(s)
+'''
+#__iter__()返回迭代对象
+#__next__()得到下一个值
+class Fib(object):
+	def __init__(self):
+		self.a, self.b = 0 ,1
+		pass
+
+	def __iter__(self):
+		return self
+		pass
+
+	def  __next__(self):
+		self.a, self.b = self.b, self.a + self.b
+		if self.a > 10000:
+			raise StopIteration()
+		return self.a
+		pass
+
+	def __getitem__(self,n):
+		if isinstance(n ,int):
+			a,b = 1,1
+			for x in range(n):
+				a,b = b, a+b
+			return a
+		if isinstance(n, slice):
+			start = n.start
+			stop = n.stop
+			if start is None:
+				start = 0
+			a,b = 1, 1
+			L= []
+			for x in range(stop):
+				if x >= start:
+					L.append(a)
+				a,b = b, a+b
+			return L
+for n in Fib():
+	print(n)
+f = Fib()
+print (f[2])
+print(f[:5])
+
+#__getitem__()获得元素
+
+class Student(object):
+	#当没有这个属性的时候 动态返回一个属性或者函数
+	def  __getattr__(self,attr):
+		if attr == 'score':
+			return 99
+
 
