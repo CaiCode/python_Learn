@@ -409,6 +409,8 @@ print(s)
 '''
 #__iter__()返回迭代对象
 #__next__()得到下一个值
+
+'''
 class Fib(object):
 	def __init__(self):
 		self.a, self.b = 0 ,1
@@ -456,5 +458,96 @@ class Student(object):
 	def  __getattr__(self,attr):
 		if attr == 'score':
 			return 99
+'''
+
+'''
+class Chain(object):
+
+	def __init__(self, path = 'GET'):
+		self._path = path
+
+	def __getattr__(self,path):
+		return Chain('%s(%s)'%(self._path, path))
+
+	def __call__(self,attr):
+		return Chain('%s(%s)'%(self._path, attr))
+
+	def __str__(self):
+		return self._path
+
+	def GetPath(self):
+		return self._path
+
+	__repr__ = __str__
+
+chain = Chain().users('michael').repos
+path = chain.GetPath()
+print(path)
+'''
+
+'''
+from enum import Enum,unique
+
+Month = Enum('Month',('Jan','Feb','Mar'))
+for name, member in Month.__members__.items():
+	print(name, '=>', member, ',', member.value)
+
+@unique
+class Weekday(Enum):
+	Sun = 0
+	Mon = 1
+	Tue = 2
+	Wed = 3
+	Thu = 4
+	Fri = 5
+	Sat = 6
+
+for name, member in Weekday.__members__.items():
+	print(name, '=>' ,member,',',member.value)
+'''
+
+'''
+#使用元类
+def fn(self, name = 'world'):
+	print('Hello, %s' %name)
+
+#创建Hello class
+#1.class的名称 2.继承的父类集合3.与函数绑定
+Hello = type('Hello',(object,),dict(hello = fn))
+'''
+#metaclass -> create Class -> create example
+
+'''
+class ListMetaclass(type):
+	def __new__(cls, name, bases, attrs):
+		attrs['add'] = lambda self, value: self.append(value)
+		return type.__new__(cls, name, bases, attrs)
+
+class MyList(list, metaclass = ListMetaclass):
+	pass
+
+L = MyList()
+L.add(1)
+print(L)
+'''
+
+#ORM框架 对象—关系映射
+
+#Field Class
+class Field(oject):
+	def __init__(self, name, column_type):
+		self.name = name
+		self.column_type = column_type
+
+	def __str__(self):
+		return '<%s,%s>' %(self.__class__.__name__,self.name)
+
+class StringField(Field):
+
+	def __init__(self, name):
+		super(StringField.self).__init__(name,'varchar(100)')
 
 
+class IntegerField(Field):
+	def __init__(self,name):
+		super(IntegerField,self).__init__(name,'bigint')
