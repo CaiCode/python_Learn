@@ -597,6 +597,139 @@ class Model(dict, metaclass = ModelMetaclass):
 		print('SQL:%s' %sql)
 		print('ARGS:%s' %str(args))
 '''
+'''
+
+#err_logging.py
+import logging
+
+def foo(s):
+	return 10/ int(s)
+
+def bar(s):
+	return foo(s) * 2
+
+def main():
+	try:
+		bar('0')
+	except Exception as e:
+		logging.exception(e)
+
+main()
+print('END')
+'''
+
+
+'''
+#raise Error 
+class FooError(ValueError):
+	pass
+
+def foo(s):
+	n = int(s)
+	if n == 0:
+		raise FooError('invaid value: %s' %s)
+	return 10/n
+foo('0')
+'''
+
+#err_reraise.py
+
+'''
+def foo(s):
+	n = int(s)
+	if n == 0:
+		raise ValueError('invalid value: %s'%s)
+	return 10/n
+
+def bar():
+	try:
+		foo('0')
+	except:
+		print('ValueError!')
+		raise
+
+bar()
+
+#该种处理方式是为了在捕获错误的同时将该错误往上抛
+'''
+
+'''
+#handle Error
+#1.print()
+#2.assert
+def foo(s):
+	n = int(s)
+	assert n!=0, 'n is zero'
+	return 10/n
+
+def main():
+	foo('0')
+
+main()
+'''
+#可利用 python3 -0 err.py来关闭
+#3.logging
+'''
+import logging
+logging.basicConfig(level = logging.INFO)
+
+s = '0'
+n = int(s)
+logging.info('n = %s' %n)
+print(10/n)
+'''
+
+'''
+#4.pdb
+import pdb
+
+s = '0'
+n = int(s)
+pdb.set_trace()
+print(10/n)
+'''
+#setUp链接数据库 tearDown 断开数据库
+
+#IO
+'''
+with open('path/to/file','r') as f:
+	print(f.read())
+
+f = open('/Users/michael/gbk.txt', 'r', encoding='gbk', errors='ignore')
+'''
+
+#StringIO
+'''
+from io import StringIO
+f = StringIO()
+f.write('Hello')
+f.write(' ')
+f.write('world!')
+print(f.getvalue())
+'''
+
+'''
+#BytesIO
+from io import BytesIO
+f = BytesIO()
+f.write('中文'.encode('utf-8'))
+print(f.getvalue())
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
