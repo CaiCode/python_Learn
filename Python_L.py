@@ -716,21 +716,127 @@ f.write('中文'.encode('utf-8'))
 print(f.getvalue())
 '''
 
+'''
+import os
+#print(os.environ)
+print(os.name)
+print (os.path.abspath('.'))
+os.path.join(...)
+os.mkdir()
+os.rmdir()
+os.path.splittext('/path/tp/file.txt')
+'''
+
+'''
+import os
+import re
+def FindKeyInFile(Key,FileName):
+	for Fname in os.listdir('.'):
+		if os.path.isfile(Fname) and re.search(Key,Fname):
+			FileName.append(Fname)
+
+
+m_Fname = []
+key = 'Python'
+FindKeyInFile(key,m_Fname)
+print(m_Fname)
+'''
+
+'''
+#序列化
+#将变量从内存中编程可存储或者咳喘素的过程称之为序列化
+import pickle
+d = dict(name = 'Bob', age = 20, score = 88)
+f = open('dump.txt', 'wb')
+pickle.dump(d,f)
+f.close()
+
+f = open('dump.txt','rb')
+di = pickle.load(f)
+f.close()
+print(di)
+
+print(json.dumps(s,default = lambda obj:obj.__dict__))
+'''
+
+
+#multiprocessing\
+'''
+import os
+print('Process (%s) start...' %os.getpid())
+pid = os.fork()
+if pid == 0:
+	print('I am child process(%s) and my parent is %s' %(os.getpid(), os.getppid()))
+else:
+	print('I (%s) just created a child process(%s)'  %(os.getpid(),pid))
+'''
+'''
+from multiprocessing import Process
+import os
+'''
+
+#子进程
+'''
+def run_proc(name):
+	print('Run child process %s(%s)' %(name, os.getpid()))
+if __name__ == '__main__':
+	print('Parent process %s' %os.getpid())
+	p = Process(target=run_proc , args = ('test',))
+	print('Child process will start')
+	p.start()
+	p.join()
+	print('Child process end')
+'''
+
+'''
+import subprocess
+
+print('$nsloop www.python.org')
+r = subprocess.call(['nslookup', 'www.baidu.com'])
+print('Exit code', r)
+'''
+
+'''
+from multiprocessing import Process, Queue
+import os,time,random
+
+def write(q):
+	print('Process to write: %s' %os.getpid())
+	for value in ['A','B','C']:
+		print('Put %s to queue...'%value)
+		q.put(value)
+		time.sleep(random.random())
+
+
+def read(q):
+	print('Process to read %s'%os.getpid())
+	while  True:
+		value = q.get(True)
+		print('Get %s from queue'%value)
 
 
 
+if __name__ == '__main__':
+	q =Queue()
+	pw = Process(target=write,args =(q,))
+	pr = Process(target=read, args = (q,))
+	pw.start()
+	pr.start()
 
+	pw.join()
+	pr.terminate()
+'''
 
+import threading, multiprocessing
 
+def loop():
+	x=0
+	while  True:
+		x = x^1
+		pass
 
-
-
-
-
-
-
-
-
-
+for i in range(multiprocessing.cpu_count()):
+	t = threading.Thread(target=loop)
+	t.start()
 
 
